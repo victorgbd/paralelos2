@@ -152,11 +152,11 @@ class ProductRepository {
       var response = await httpClient.post(Uri.parse(urlBase), body: {
         "Nombre": nombre,
         "Descripcion": descripcion,
-        "Precio": precio,
-        "CantidadStock": cantidad,
-        "Reorden": reorden,
-        "CategoriaID": categoriaId,
-        "ProveedorID": proveedorId
+        "Precio": precio.toString(),
+        "CantidadStock": cantidad.toString(),
+        "Reorden": reorden.toString(),
+        "CategoriaID": categoriaId.toString(),
+        "ProveedorID": proveedorId.toString()
       }).timeout(const Duration(seconds: 10));
 
       final data = json.decode(response.body);

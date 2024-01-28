@@ -15,10 +15,10 @@ class ProductManagementView extends ConsumerStatefulWidget {
 
 class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
   final _formKey = GlobalKey<FormBuilderState>();
-  bool hidePassword = true;
+
   @override
   Widget build(BuildContext context) {
-    void signIn(BuildContext context) async {
+    void save(BuildContext context) async {
       FocusManager.instance.primaryFocus?.unfocus();
       final result = _formKey.currentState?.saveAndValidate() ?? false;
 
@@ -26,11 +26,14 @@ class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
 
       final nombre = _formKey.currentState?.value['nombre'] as String;
       final descripcion = _formKey.currentState?.value['descripcion'] as String;
-      final precio = _formKey.currentState?.value['precio'] as double;
-      final cantidad = _formKey.currentState?.value['cantidad'] as int;
-      final reorden = _formKey.currentState?.value['reorden'] as int;
-      final categoriaId = _formKey.currentState?.value['categoria_id'] as int;
-      final proveedorId = _formKey.currentState?.value['proveedor_id'] as int;
+      final precio =
+          double.parse(_formKey.currentState?.value['precio'] as String);
+      final cantidad =
+          int.parse(_formKey.currentState?.value['cantidad'] as String);
+      final reorden =
+          int.parse(_formKey.currentState?.value['reorden'] as String);
+      final categoriaId = _formKey.currentState?.value['categoria_id'].id;
+      final proveedorId = _formKey.currentState?.value['proveedor_id'].id;
 
       await ref.read(productRepositoryProvider).create(nombre, descripcion,
           precio, cantidad, reorden, categoriaId, proveedorId);
@@ -75,7 +78,7 @@ class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
                           focusedBorder: InputBorder.none,
                         ),
                         name: 'nombre',
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.text,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(),
@@ -116,7 +119,6 @@ class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
                         ),
                         name: 'descripcion',
                         keyboardType: TextInputType.text,
-                        obscureText: hidePassword,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(),
@@ -156,8 +158,7 @@ class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
                           focusedBorder: InputBorder.none,
                         ),
                         name: 'precio',
-                        keyboardType: TextInputType.text,
-                        obscureText: hidePassword,
+                        keyboardType: TextInputType.number,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(),
@@ -197,8 +198,7 @@ class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
                           focusedBorder: InputBorder.none,
                         ),
                         name: 'cantidad',
-                        keyboardType: TextInputType.text,
-                        obscureText: hidePassword,
+                        keyboardType: TextInputType.number,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(),
@@ -238,7 +238,7 @@ class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
                           focusedBorder: InputBorder.none,
                         ),
                         name: 'reorden',
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.number,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(),
@@ -270,7 +270,7 @@ class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10.0, vertical: 5.0),
-                      child: FormBuilderDropdown<CategoryEntity>(
+                      child: FormBuilderDropdown(
                         decoration: const InputDecoration(
                           errorBorder: InputBorder.none,
                           focusedErrorBorder: InputBorder.none,
@@ -279,8 +279,10 @@ class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
                         ),
                         name: 'categoria_id',
                         items: categories
-                            .map((e) => DropdownMenuItem<CategoryEntity>(
-                                child: Text(e.nombre)))
+                            .map((e) => DropdownMenuItem(
+                                  value: e,
+                                  child: Text(e.nombre),
+                                ))
                             .toList(),
                         validator: FormBuilderValidators.compose(
                           [
@@ -291,6 +293,52 @@ class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 20.0),
+                const Padding(
+                  padding: EdgeInsets.only(left: 22.0),
+                  child: Text(
+                    "Proveedor",
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7.0),
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.grey[200]
+                            : const Color(0xff1c272b),
+                        border:
+                            Border.all(color: Colors.grey.shade400, width: 2)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 5.0),
+                      child: FormBuilderDropdown(
+                        decoration: const InputDecoration(
+                          errorBorder: InputBorder.none,
+                          focusedErrorBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ),
+                        name: 'proveedor_id',
+                        items: suppliers
+                            .map((e) => DropdownMenuItem(
+                                  value: e,
+                                  child: Text(e.nombre),
+                                ))
+                            .toList(),
+                        validator: FormBuilderValidators.compose(
+                          [
+                            FormBuilderValidators.required(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 22.0),
                   child: ElevatedButton(
@@ -304,7 +352,7 @@ class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
                           borderRadius: BorderRadius.circular(5.0),
                         ))),
                     onPressed: () {
-                      signIn(context);
+                      save(context);
                     },
                     child: const Text(
                       "Guardar",
