@@ -17,7 +17,7 @@ class ProductRepository {
 
   Future<List<Product>?> fetchAll() async {
     try {
-      const urlBase = 'http://localhost:5000/products';
+      const urlBase = 'http://10.0.0.5:5000/products';
       int result = 0;
       for (int i = 0; i < 100000000; i++) {
         result = result + i;
@@ -25,7 +25,7 @@ class ProductRepository {
       print(result);
 
       var response = await httpClient
-          .post(
+          .get(
             Uri.parse(urlBase),
           )
           .timeout(const Duration(seconds: 10));
@@ -62,7 +62,7 @@ class ProductRepository {
 
   Future<void> fetchAllIsolate(SendPort sendPort) async {
     try {
-      const urlBase = 'http://localhost:5000/products';
+      const urlBase = 'http://10.0.0.5:5000/products';
       int result = 0;
       for (int i = 0; i < 100000000; i++) {
         result = result + i;
@@ -70,7 +70,7 @@ class ProductRepository {
       print(result);
 
       var response = await httpClient
-          .post(
+          .get(
             Uri.parse(urlBase),
           )
           .timeout(const Duration(seconds: 10));

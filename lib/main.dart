@@ -88,8 +88,11 @@ class _ProductViewState extends ConsumerState<ProductView> {
                 );
 
                 resultPort.listen((result) {
+                  print(result);
                   if (result != null) {
-                    productIsolate = result;
+                    setState(() {
+                      productIsolate = result;
+                    });
                   }
                 });
               },
