@@ -40,22 +40,22 @@ class ProductRepository {
               Product.fromJson(Map.from(node)),
             );
           }
-          Future.delayed(Duration(seconds: 5));
+          Future.delayed(const Duration(seconds: 5));
           return productos;
         }
-        Future.delayed(Duration(seconds: 5));
+        Future.delayed(const Duration(seconds: 5));
         return null;
       } else {
-        Future.delayed(Duration(seconds: 5));
+        Future.delayed(const Duration(seconds: 5));
         return null;
       }
     } on TimeoutException {
-      Future.delayed(Duration(seconds: 5));
+      Future.delayed(const Duration(seconds: 5));
       return null;
     } catch (error, stack) {
       log("****** ProductRepository.fetchAll ******",
           error: error, stackTrace: stack);
-      Future.delayed(Duration(seconds: 5));
+      Future.delayed(const Duration(seconds: 5));
       return null;
     }
   }

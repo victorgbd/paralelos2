@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:paralelos2/product_entity.dart';
 import 'package:paralelos2/product_repository.dart';
 
-final productControllerProvider =
-    StateNotifierProvider.autoDispose<ProductController, ProductState>(
-        (ref) => ProductController(ref.read(productRepositoryProvider), ref));
+final productNotifierProvider =
+    StateNotifierProvider.autoDispose<ProductNotifier, ProductState>(
+        (ref) => ProductNotifier(ref.read(productRepositoryProvider), ref));
 
 class ProductState {
   final List<Product> products;
@@ -32,10 +32,10 @@ class ProductState {
   }
 }
 
-class ProductController extends StateNotifier<ProductState> {
+class ProductNotifier extends StateNotifier<ProductState> {
   final ProductRepository _repository;
   final Ref ref;
-  ProductController(
+  ProductNotifier(
     this._repository,
     this.ref,
   ) : super(const ProductState());
