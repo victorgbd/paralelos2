@@ -2,7 +2,7 @@ import 'dart:isolate';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:paralelos2/product_provider.dart';
+import 'package:paralelos2/providers/product_provider.dart';
 
 import '../product_entity.dart';
 import '../product_repository.dart';

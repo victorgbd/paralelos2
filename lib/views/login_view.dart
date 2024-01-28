@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:paralelos2/product_repository.dart';
+import 'package:paralelos2/views/home_view.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+class Loginview extends ConsumerStatefulWidget {
+  const Loginview({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginviewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginviewState extends ConsumerState<Loginview> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool hidePassword = true;
   @override
   Widget build(BuildContext context) {
-    void signIn() async {
+    void signIn(BuildContext context) async {
       FocusManager.instance.primaryFocus?.unfocus();
       final result = _formKey.currentState?.saveAndValidate() ?? false;
 
@@ -22,6 +25,17 @@ class _LoginViewState extends State<LoginView> {
 
       final user = _formKey.currentState?.value['user'] as String;
       final password = _formKey.currentState?.value['password'] as String;
+      final flag =
+          await ref.read(productRepositoryProvider).signIn(user, password);
+      if (flag) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => const ProductView(),
+            ),
+            (Route<dynamic> route) => false);
+      } else {
+        return;
+      }
     }
 
     return Scaffold(
@@ -139,7 +153,9 @@ class _LoginViewState extends State<LoginView> {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         ))),
-                    onPressed: signIn,
+                    onPressed: () {
+                      signIn(context);
+                    },
                     child: const Text(
                       "Iniciar sesión",
                       style: TextStyle(fontSize: 16.0),
