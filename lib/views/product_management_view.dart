@@ -37,6 +37,7 @@ class _ProductManagementViewState extends ConsumerState<ProductManagementView> {
 
       await ref.read(productRepositoryProvider).create(nombre, descripcion,
           precio, cantidad, reorden, categoriaId, proveedorId);
+      _formKey.currentState?.reset();
     }
 
     return Scaffold(
