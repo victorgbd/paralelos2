@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:paralelos2/product_entity.dart';
 import 'package:paralelos2/product_repository.dart';
@@ -47,5 +49,23 @@ class ProductController extends StateNotifier<ProductState> {
 
     final products = result;
     state = state.empty.copyWith(products: products, isLoading: false);
+  }
+
+  Future<void> fetchAllIsolate() async {
+    state = state.empty.copyWith(isLoading: true);
+    final resultPort = ReceivePort();
+    await Isolate.spawn(
+      _repository.fetchAllIsolate,
+      resultPort.sendPort,
+    );
+    resultPort.listen((result) {
+      if (result == null) {
+        state = state.empty.copyWith(errorMessage: null, isLoading: false);
+        return;
+      }
+
+      final products = result;
+      state = state.empty.copyWith(products: products, isLoading: false);
+    });
   }
 }
