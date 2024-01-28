@@ -131,10 +131,43 @@ class ProductRepository {
       Future.delayed(const Duration(seconds: 5));
       return false;
     } catch (error, stack) {
-      log("****** ProductRepository.fetchAll ******",
+      log("****** ProductRepository.signIn ******",
           error: error, stackTrace: stack);
       Future.delayed(const Duration(seconds: 5));
       return false;
+    }
+  }
+
+  Future<void> create(String nombre, String descripcion, double precio,
+      int cantidad, int reorden, int categoriaId, int proveedorId) async {
+    try {
+      const urlBase = 'http://10.0.0.5:5000/products';
+      // int result = 0;
+      // for (int i = 0; i < 100000000; i++) {
+      //   result = result + i;
+      // }
+      // print(result);
+
+      var response = await httpClient.post(Uri.parse(urlBase), body: {
+        "Nombre": nombre,
+        "Descripcion": descripcion,
+        "Precio": precio,
+        "CantidadStock": cantidad,
+        "Reorden": reorden,
+        "CategoriaID": categoriaId,
+        "ProveedorID": proveedorId
+      }).timeout(const Duration(seconds: 10));
+
+      final data = json.decode(response.body);
+      if (data != null) {
+        log(data['message']);
+      }
+    } on TimeoutException {
+      return;
+    } catch (error, stack) {
+      log("****** ProductRepository.create ******",
+          error: error, stackTrace: stack);
+      return;
     }
   }
 }

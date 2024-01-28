@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:paralelos2/providers/product_provider.dart';
+import 'package:paralelos2/views/product_management_view.dart';
 
 import '../product_entity.dart';
 import '../product_repository.dart';
@@ -32,6 +33,15 @@ class _ProductViewState extends ConsumerState<ProductView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Productos"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ProductManagementView(),
+                ));
+              },
+              icon: const Icon(Icons.add))
+        ],
       ),
       body: Column(
         children: [
@@ -44,7 +54,7 @@ class _ProductViewState extends ConsumerState<ProductView> {
               onPressed: () async {
                 ref.read(productNotifierProvider.notifier).fetchAll();
               },
-              child: const Text("No isolate")),
+              child: const Text("Hilo principal")),
           Expanded(
             child: productState.isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -77,7 +87,7 @@ class _ProductViewState extends ConsumerState<ProductView> {
                   }
                 });
               },
-              child: const Text("Isolate")),
+              child: const Text("En hilo secundario")),
           Expanded(
             child: Builder(
               builder: (context) {

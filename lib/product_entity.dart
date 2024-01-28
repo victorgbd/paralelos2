@@ -50,3 +50,32 @@ class Product {
     return data;
   }
 }
+
+class CategoryEntity {
+  final int id;
+  final String nombre;
+
+  const CategoryEntity({required this.id, required this.nombre});
+}
+
+const categories = [
+  CategoryEntity(id: 1, nombre: 'Bebidas'),
+  CategoryEntity(id: 2, nombre: 'Snacks'),
+  CategoryEntity(id: 3, nombre: 'Electronica'),
+  CategoryEntity(id: 4, nombre: 'Ropa'),
+  CategoryEntity(id: 5, nombre: 'Hogar'),
+  CategoryEntity(id: 6, nombre: 'Deportes')
+];
+
+class Supplier {
+  final int id;
+  final String nombre;
+
+  const Supplier({required this.id, required this.nombre});
+}
+
+const suppliers = [
+  Supplier(id: 1, nombre: 'Juanito'),
+  Supplier(id: 2, nombre: 'Cerveceria'),
+  Supplier(id: 3, nombre: 'Mamonte')
+];

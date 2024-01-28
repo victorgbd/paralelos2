@@ -81,7 +81,6 @@ class _LoginviewState extends ConsumerState<Loginview> {
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(),
-                            FormBuilderValidators.email(),
                           ],
                         ),
                       ),
@@ -133,7 +132,6 @@ class _LoginviewState extends ConsumerState<Loginview> {
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(),
-                            FormBuilderValidators.minLength(4),
                           ],
                         ),
                       ),
