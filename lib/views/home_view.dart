@@ -44,7 +44,7 @@ class _ProductViewState extends ConsumerState<ProductView> {
               onPressed: () async {
                 ref.read(productNotifierProvider.notifier).fetchAll();
               },
-              child: const Text("No isolate")),
+              child: const Text("Hilo principal")),
           Expanded(
             child: productState.isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -77,7 +77,7 @@ class _ProductViewState extends ConsumerState<ProductView> {
                   }
                 });
               },
-              child: const Text("Isolate")),
+              child: const Text("En hilo secundario")),
           Expanded(
             child: Builder(
               builder: (context) {
