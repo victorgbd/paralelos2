@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:paralelos2/providers/product_provider.dart';
 import 'package:paralelos2/views/product_management_view.dart';
+import 'package:paralelos2/views/users_view.dart';
 
 import '../product_entity.dart';
 import '../product_repository.dart';
@@ -34,6 +35,13 @@ class _ProductViewState extends ConsumerState<ProductView> {
       appBar: AppBar(
         title: const Text("Productos"),
         actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const UsersView(),
+                ));
+              },
+              child: const Text('Users')),
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
