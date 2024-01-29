@@ -2,7 +2,6 @@ import 'dart:isolate';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:paralelos2/providers/product_provider.dart';
 import 'package:paralelos2/providers/user_provider.dart';
 import 'package:paralelos2/user_entity.dart';
 import 'package:paralelos2/user_repository.dart';
@@ -52,7 +51,7 @@ class _UsersViewState extends ConsumerState<UsersView> {
           ),
           ElevatedButton(
               onPressed: () async {
-                ref.read(productNotifierProvider.notifier).fetchAll();
+                ref.read(userNotifierProvider.notifier).fetchAll();
               },
               child: const Text("Hilo principal")),
           Expanded(
