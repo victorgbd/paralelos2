@@ -153,7 +153,7 @@ class _UserManagementViewState extends ConsumerState<UserManagementView> {
                           focusedBorder: InputBorder.none,
                         ),
                         name: 'password',
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(),
@@ -193,7 +193,7 @@ class _UserManagementViewState extends ConsumerState<UserManagementView> {
                           focusedBorder: InputBorder.none,
                         ),
                         name: 'rol',
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(),

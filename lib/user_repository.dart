@@ -17,7 +17,7 @@ class UserRepository {
 
   Future<List<User>?> fetchAll() async {
     try {
-      const urlBase = 'http://10.0.0.5:5000/Users';
+      const urlBase = 'http://172.20.10.6:5000/users';
       int result = 0;
       for (int i = 0; i < 100000000; i++) {
         result = result + i;
@@ -62,7 +62,7 @@ class UserRepository {
 
   Future<void> fetchAllIsolate(SendPort sendPort) async {
     try {
-      const urlBase = 'http://10.0.0.5:5000/Users';
+      const urlBase = 'http://172.20.10.6:5000/users';
       int result = 0;
       for (int i = 0; i < 100000000; i++) {
         result = result + i;
@@ -104,7 +104,8 @@ class UserRepository {
   Future<void> create(
       String nombre, String user, String password, String rol) async {
     try {
-      const urlBase = 'http://10.0.0.5:5000/Users';
+
+      const urlBase = 'http://172.20.10.6:5000/users';
       // int result = 0;
       // for (int i = 0; i < 100000000; i++) {
       //   result = result + i;
@@ -120,6 +121,7 @@ class UserRepository {
           "Rol": rol
         },
       ).timeout(const Duration(seconds: 10));
+
 
       final data = json.decode(response.body);
       if (data != null) {

@@ -17,7 +17,7 @@ class ProductRepository {
 
   Future<List<Product>?> fetchAll() async {
     try {
-      const urlBase = 'http://10.0.0.5:5000/products';
+      const urlBase = 'http://172.20.10.6:5000/products';
       int result = 0;
       for (int i = 0; i < 100000000; i++) {
         result = result + i;
@@ -103,7 +103,7 @@ class ProductRepository {
 
   Future<bool> signIn(String user, String password) async {
     try {
-      const urlBase = 'http://10.0.0.5:5000/login';
+      const urlBase = 'http://172.20.10.6:5000/login';
       // int result = 0;
       // for (int i = 0; i < 100000000; i++) {
       //   result = result + i;
@@ -116,6 +116,7 @@ class ProductRepository {
       }).timeout(const Duration(seconds: 10));
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
+
         final data = json.decode(response.body);
         if (data != null) {
           Future.delayed(const Duration(seconds: 5));
@@ -125,6 +126,7 @@ class ProductRepository {
         Future.delayed(const Duration(seconds: 5));
         return false;
       } else {
+        print(response);
         Future.delayed(const Duration(seconds: 5));
         return false;
       }
